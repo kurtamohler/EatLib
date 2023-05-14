@@ -23,3 +23,22 @@ Then install Nutrinaut.
 ```bash
 pip install .
 ```
+
+## Get a FoodData Central API key
+
+Sign up for an API key [here](https://fdc.nal.usda.gov/api-key-signup.html).
+
+The key will be sent to your email address. You can give this key to Nutrinaut in
+two different ways:
+
+  1. Set an environment variable before running a Nutrinaut application:
+
+     ```bash
+     export NUTRINAUT_API_KEY='<your FoodData Central API key>'
+     ```
+
+  2. Call `nutrinaut.set_api_key` in your application:
+
+     ```bash
+     nutrinaut.set_api_key('<your FoodData Central API key>')
+     ```
