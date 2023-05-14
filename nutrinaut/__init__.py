@@ -7,6 +7,8 @@ from .database import (
     set_api_key,
     get_api_key,
     _search_raw,
+    search,
+    get,
 )
 
 database._init_api_key()
