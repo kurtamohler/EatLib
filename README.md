@@ -10,7 +10,7 @@ you've eaten, given a list of foods and the amounts of each, by weight.
 
 ## Install
 
-Install Miniconda: [instructions](https://docs.conda.io/projects/conda/en/latest/user-guid    e/install/index.html)
+Install Miniconda: [instructions](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html)
 
 Run the following to create and activate an environment with all dependencies.
 
