@@ -7,7 +7,7 @@ with open('README.md') as f:
 # with open('LICENSE') as f:
 #    license = f.read()
 
-name = 'eatlib'
+name = 'nutrinaut'
 version = '0.0'
 release = '0.0.0'
 
@@ -18,7 +18,7 @@ setup(
     long_description=readme,
     author='Kurt Mohler',
     author_email='kurtamohler@gmail.com',
-    url='https://github.com/kurtamohler/eatlib',
+    url='https://github.com/kurtamohler/nutrinaut',
     # license=license,
-    packages=['eatlib'],
+    packages=['nutrinaut'],
 )
