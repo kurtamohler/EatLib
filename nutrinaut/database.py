@@ -4,6 +4,7 @@ import os
 import urllib.parse
 import zipfile
 import io
+from fuzzywuzzy import fuzz, process
 
 from .error_checking import (check, check_type)
 from .nutrients import Nutrients
@@ -164,13 +165,14 @@ def _maybe_load_database():
         with open(_data_path) as json_file:
             _database = json.loads(json_file.read())
 
-def search(food_name, page_size=10, page_num=0, only_nonbranded=True):
+def search(food_name, limit=10):
     _maybe_load_database()
-    foods = []
-    return foods
+    results = process.extract(food_name, _database.keys(), limit=limit)
+    return results
 
-def get(food_name, only_nonbranded=True):
-    res = search(food_name, page_size=1, page_num=0, only_nonbranded=only_nonbranded)
-    check(len(res) != 0 and res[0][0] == food_name, ValueError,
-        f"no food with exact name '{food_name}' was found")
-    return res[0][1]
+def get(food_name):
+    _maybe_load_database()
+    check(food_name in _database, ValueError,
+        f"Did not find exact name '{food_name}' in database. "
+        "Use 'nutrinaut.search' to find existing matches")
+    return Nutrients(**_database[food_name])

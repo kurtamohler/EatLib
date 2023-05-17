@@ -7,3 +7,5 @@ dependencies:
   - pip:
     - setuptools
     - requests
+    - fuzzywuzzy
+    - python-Levenshtein
