@@ -9,8 +9,8 @@ from fuzzywuzzy import fuzz, process
 from .error_checking import (check, check_type)
 from .nutrients import Nutrients
 
-_data_dir = os.path.expanduser('~/.nutrinaut')
-_data_path = os.path.join(_data_dir, 'nutrinaut_database.json')
+_data_dir = os.path.expanduser('~/.foodypy')
+_data_path = os.path.join(_data_dir, 'foodypy_database.json')
 _database = None
 
 def _load_database_raw(url):
@@ -28,7 +28,7 @@ def _load_database_raw(url):
     with zip_result.open(infolist[0].filename) as json_file:
         data = json.loads(json_file.read())
 
-    #with open(os.path.expanduser('~/tmp/nutrinaut_database_sr_raw.json'), 'w', encoding='utf-8') as f:
+    #with open(os.path.expanduser('~/tmp/foodypy_database_sr_raw.json'), 'w', encoding='utf-8') as f:
     #    json.dump(data, f)
 
     return data
@@ -138,10 +138,10 @@ def install_database(overwrite=False):
     data_raw = _load_database_raw(sr_legacy_url)
 
     # Foundation Foods
-    #file_raw = '~/tmp/nutrinaut_database_raw.json'
+    #file_raw = '~/tmp/foodypy_database_raw.json'
 
     # SR Legacy
-    #file_raw = '~/tmp/nutrinaut_database_sr_raw.json'
+    #file_raw = '~/tmp/foodypy_database_sr_raw.json'
 
     #with open(os.path.expanduser(file_raw)) as json_file:
     #    data_raw = json.loads(json_file.read())
@@ -160,7 +160,7 @@ def _maybe_load_database():
     if _database is None:
         check(os.path.exists(_data_path), RuntimeError,
             "Cannot load database because it has not been installed "
-            "please run 'nutrinaut.install_database()'")
+            "please run 'foodypy.install_database()'")
 
         with open(_data_path) as json_file:
             _database = json.loads(json_file.read())
@@ -174,5 +174,5 @@ def get(food_name):
     _maybe_load_database()
     check(food_name in _database, ValueError,
         f"Did not find exact name '{food_name}' in database. "
-        "Use 'nutrinaut.search' to find existing matches")
+        "Use 'foodypy.search' to find existing matches")
     return Nutrients(**_database[food_name])

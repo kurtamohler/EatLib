@@ -1,7 +1,7 @@
-# Nutrinaut
+# FoodyPy
 Food nutrition library with array operations
 
-Nutrinaut makes diet tracking easy. It provides a simple interface to search for
+FoodyPy makes diet tracking easy. It provides a simple interface to search for
 foods in USDA's [FoodData Central](https://fdc.nal.usda.gov/) database.
 
 Nutrition results are like numerical arrays, so they can be operated upon with
@@ -15,19 +15,19 @@ Install Miniconda: [instructions](https://docs.conda.io/projects/conda/en/latest
 Run the following to create and activate an environment with all dependencies.
 
 ```bash
-conda env create -f environment.yaml -n nutrinaut && conda activate nutrinaut
+conda env create -f environment.yaml -n foodypy && conda activate foodypy
 ```
 
-Install Nutrinaut.
+Install FoodyPy.
 
 ```bash
 pip install .
 ```
 
-Install the Nutrinaut database.
+Install the FoodyPy database.
 
 ```bash
-python -c 'import nutrinaut; nutrinaut.install_database()'
+python -c 'import foodypy; foodypy.install_database()'
 ```
 
 ## Basic usage
@@ -37,7 +37,8 @@ python -c 'import nutrinaut; nutrinaut.install_database()'
 You can search for foods by name, like so:
 
 ```python
->>> nutrinaut.search('peas', limit=10)
+>>> import foodypy
+>>> foodypy.search('peas', limit=10)
 [('Cowpeas, leafy tips, raw', 90),
  ('Babyfood, peas and brown rice', 90),
  ('Peas, edible-podded, raw', 90),
@@ -58,15 +59,15 @@ You can obtain the nutrition of a food with it's exact name from the search
 results, like so:
 
 ```python
->>> nutrinaut.get('Peas, green, raw')
+>>> foodypy.get('Peas, green, raw')
 Nutrients(fat=0.004, carbs=0.14400000000000002, protein=0.0542, calories=0.8288000000000001)
 ```
 
-The nutrient results from `nutrinaut.get` give the nutrients for 1 gram of the
+The nutrient results from `foodypy.get` give the nutrients for 1 gram of the
 food. So if you want to know the nutrients in 150 grams of peas, for instance,
 you can just multiply the result by 150:
 
 ```python
->>> 150 * nutrinaut.get('Peas, green, raw')
+>>> 150 * foodypy.get('Peas, green, raw')
 Nutrients(fat=0.6, carbs=21.6, protein=8.129999999999999, calories=124.32000000000001)
 ```

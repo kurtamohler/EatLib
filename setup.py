@@ -7,7 +7,7 @@ with open('README.md') as f:
 # with open('LICENSE') as f:
 #    license = f.read()
 
-name = 'nutrinaut'
+name = 'foodypy'
 version = '0.0'
 release = '0.0.0'
 
@@ -18,7 +18,7 @@ setup(
     long_description=readme,
     author='Kurt Mohler',
     author_email='kurtamohler@gmail.com',
-    url='https://github.com/kurtamohler/nutrinaut',
+    url='https://github.com/kurtamohler/foodypy',
     # license=license,
-    packages=['nutrinaut'],
+    packages=['foodypy'],
 )
