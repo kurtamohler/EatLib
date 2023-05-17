@@ -18,27 +18,55 @@ Run the following to create and activate an environment with all dependencies.
 conda env create -f environment.yaml -n nutrinaut && conda activate nutrinaut
 ```
 
-Then install Nutrinaut.
+Install Nutrinaut.
 
 ```bash
 pip install .
 ```
 
-## Get a FoodData Central API key
+Install the Nutrinaut database.
 
-Sign up for an API key [here](https://fdc.nal.usda.gov/api-key-signup.html).
+```bash
+python -c 'import nutrinaut; nutrinaut.install_database()'
+```
 
-The key will be sent to your email address. You can give this key to Nutrinaut in
-two different ways:
+## Basic usage
 
-  1. Set an environment variable before running a Nutrinaut application:
+### Search for foods
 
-     ```bash
-     export NUTRINAUT_API_KEY='<your FoodData Central API key>'
-     ```
+You can search for foods by name, like so:
 
-  2. Call `nutrinaut.set_api_key` in your application:
+```python
+>>> nutrinaut.search('peas', limit=10)
+[('Cowpeas, leafy tips, raw', 90),
+ ('Babyfood, peas and brown rice', 90),
+ ('Peas, edible-podded, raw', 90),
+ ('Pigeonpeas, immature seeds, raw', 90),
+ ('Peas, green, raw', 90),
+ ('Babyfood, peas, dices, toddler', 90),
+ ('SMART SOUP, Moroccan Chick Pea', 77),
+ ('Ice creams, vanilla, light', 68),
+ ('Ice creams, vanilla, rich', 68),
+ ('Ice creams, vanilla', 68)]
+```
 
-     ```bash
-     nutrinaut.set_api_key('<your FoodData Central API key>')
-     ```
+The results are sorted by a search relevance score.
+
+### Get food nutrition
+
+You can obtain the nutrition of a food with it's exact name from the search
+results, like so:
+
+```python
+>>> nutrinaut.get('Peas, green, raw')
+Nutrients(fat=0.004, carbs=0.14400000000000002, protein=0.0542, calories=0.8288000000000001)
+```
+
+The nutrient results from `nutrinaut.get` give the nutrients for 1 gram of the
+food. So if you want to know the nutrients in 150 grams of peas, for instance,
+you can just multiply the result by 150:
+
+```python
+>>> 150 * nutrinaut.get('Peas, green, raw')
+Nutrients(fat=0.6, carbs=21.6, protein=8.129999999999999, calories=124.32000000000001)
+```
