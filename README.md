@@ -24,7 +24,8 @@ Install FoodyPy.
 pip install .
 ```
 
-Install the FoodyPy database.
+Install the FoodyPy database. The database is installed to `~/.foodypy`, and
+it takes up about 1 MB.
 
 ```bash
 python -c 'import foodypy; foodypy.install_database()'
