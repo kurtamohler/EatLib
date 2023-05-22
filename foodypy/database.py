@@ -81,12 +81,12 @@ def _nutrients_from_raw(food_raw):
         #'starch': [
         #    'Starch',
         #],
-        #'fiber': [
-        #    'Fiber, total dietary',
-        #],
-        'sugars': [
-            'Sugars, Total',
+        'fiber': [
+            'Fiber, total dietary',
         ],
+        #'sugars': [
+        #    'Sugars, Total',
+        #],
     }
 
     nutrients_extracted = {}
@@ -101,6 +101,7 @@ def _nutrients_from_raw(food_raw):
         'fat': (nutrients_extracted['fat'] or 0),
         'carbs': nutrients_extracted['carbs by diff'],
         'protein': (nutrients_extracted['protein'] or 0),
+        'fiber': (nutrients_extracted['fiber'] or 0),
     }
 
     # Divide by 100g, since that is the amount stored in FoodData Central

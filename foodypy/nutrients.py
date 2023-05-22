@@ -1,10 +1,11 @@
 class Nutrients:
     '''Holds nutrition data. Supports some array arithmetic operations.
     '''
-    def __init__(self, fat=0, carbs=0, protein=0):
+    def __init__(self, fat=0, carbs=0, protein=0, fiber=0):
         self._fat = fat
         self._carbs = carbs
         self._protein = protein
+        self._fiber = fiber
 
     @property
     def fat(self):
@@ -19,11 +20,15 @@ class Nutrients:
         return self._protein
 
     @property
+    def fiber(self):
+        return self._fiber
+
+    @property
     def calories(self):
         return (9 * self.fat) + (4 * self.carbs) + (4 * self.protein)
 
     def __str__(self):
-        return f'Nutrients(fat={self.fat}, carbs={self.carbs}, protein={self.protein}, calories={self.calories})'
+        return f'Nutrients(fat={self.fat}, carbs={self.carbs}, protein={self.protein}, calories={self.calories}, fiber={self.fiber})'
 
     def __repr__(self):
         return str(self)
@@ -33,12 +38,14 @@ class Nutrients:
             return Nutrients(
                 fat=op(self.fat, other.fat),
                 carbs=op(self.carbs, other.carbs),
-                protein=op(self.protein, other.protein))
+                protein=op(self.protein, other.protein),
+                fiber=op(self.fiber, other.fiber))
         else:
             return Nutrients(
                 fat=op(self.fat, other),
                 carbs=op(self.carbs, other),
-                protein=op(self.protein, other))
+                protein=op(self.protein, other),
+                fiber=op(self.fiber, other))
 
     def __add__(self, other):
         return self._binary_op(other, lambda a, b: a + b)
