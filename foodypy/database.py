@@ -127,6 +127,16 @@ def _convert_from_raw(data_raw):
     return food_data
 
 def install_database(overwrite=False):
+    '''
+    Installs the FoodyPy database to ``$HOME/.foodypy/``.
+
+    Args:
+
+      overwrite (bool, optional):
+        If ``True``, overwrite the current database, if it exists.
+
+        Default: False
+    '''
     if not overwrite:
         check(not os.path.exists(_data_path), RuntimeError,
             f"Database already installed to location '{_data_path}'. "
@@ -168,11 +178,47 @@ def _maybe_load_database():
             _database = json.loads(json_file.read())
 
 def search(food_name, limit=10):
+    '''
+
+    Search foods in the database which match the search term most closely. This
+    uses a fuzzy string search to find the most relevant matches.
+
+    Args:
+
+      food_name (str):
+        Search term
+
+      limit (int, optional):
+        The maximum number of search results to return.
+
+        Default: 10
+
+    Returns:
+      list[tuple[str, int]]:
+
+        List of search results, ordered by relevance. Each result is a tuple
+        containing the name of the food in the database, paired with
+        a relevance score between 0 and 100. Each food name can be given to
+        :func:`foodypy.get` to get the :class:`foodypy.Nutrients` for that
+        food.
+
+    '''
     _maybe_load_database()
     results = process.extract(food_name, _database.keys(), limit=limit)
     return results
 
 def get(food_name):
+    '''
+    Get the :class:`foodypy.Nutrients` for one gram of the specified food in
+    the database.
+
+    Args:
+
+      food_name (str): The name of the food in the database
+
+    Returns:
+      :class:`foodypy.Nutrients`
+    '''
     _maybe_load_database()
     check(food_name in _database, ValueError,
         f"Did not find exact name '{food_name}' in database. "
@@ -180,6 +226,13 @@ def get(food_name):
     return Nutrients(**_database[food_name])
 
 def copy_database():
+    '''
+    Get a copy of the database.
+
+    Returns:
+      dict[str, :class:`foodypy.Nutrients`]:
+        A copy of the FoodyPy database, keyed by food names.
+    '''
     _maybe_load_database()
     db = {}
 
