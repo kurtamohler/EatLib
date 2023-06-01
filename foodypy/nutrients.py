@@ -168,8 +168,3 @@ class Nutrients:
           :class:`foodypy.Nutrients`:
         '''
         return self._binary_op(other, lambda a, b: a / b)
-
-def macros(fat=0, carbs=0, protein=0):
-    '''Creates a :class:`Nutrients` object from macronutrients.
-    '''
-    return Nutrients(fat=fat, carbs=carbs, protein=protein)

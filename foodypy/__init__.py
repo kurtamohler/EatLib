@@ -1,6 +1,5 @@
 from .nutrients import (
     Nutrients,
-    macros,
 )
 
 from .database import (
