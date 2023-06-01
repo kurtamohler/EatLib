@@ -9,3 +9,6 @@ dependencies:
     - requests
     - fuzzywuzzy
     - python-Levenshtein
+    - sphinx
+    - myst-parser
+    - myst-nb

@@ -8,7 +8,7 @@ Nutrition results are like numerical arrays, so they can be operated upon with
 array arithmetic. This makes it easy to calculate how much of each nutrient
 you've eaten, given a list of foods and the amounts of each, by weight.
 
-## Install
+## Build FoodyPy from source
 
 Install Miniconda: [instructions](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html)
 
@@ -29,6 +29,12 @@ it takes up about 1 MB.
 
 ```bash
 python -c 'import foodypy; foodypy.install_database()'
+```
+
+Build FoodyPy docs.
+
+```bash
+python setup.py build_sphinx
 ```
 
 ## Basic usage
