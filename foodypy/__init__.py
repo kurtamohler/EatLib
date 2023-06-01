@@ -7,6 +7,7 @@ from .database import (
     search,
     get,
     install_database,
+    copy_database,
 )
 
 del nutrients

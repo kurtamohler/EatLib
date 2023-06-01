@@ -4,6 +4,7 @@ import os
 import urllib.parse
 import zipfile
 import io
+import copy
 from fuzzywuzzy import fuzz, process
 
 from .error_checking import (check, check_type)
@@ -177,3 +178,12 @@ def get(food_name):
         f"Did not find exact name '{food_name}' in database. "
         "Use 'foodypy.search' to find existing matches")
     return Nutrients(**_database[food_name])
+
+def copy_database():
+    _maybe_load_database()
+    db = {}
+
+    for food_name, nutrients_raw in _database.items():
+        db[food_name] = Nutrients(**nutrients_raw)
+
+    return db
