@@ -9,6 +9,12 @@ from .database import (
     copy_database,
 )
 
+# Install database if it hasn't been installed yet
+try:
+    install_database()
+except RuntimeError:
+    pass
+
 del nutrients
 del database
 del error_checking

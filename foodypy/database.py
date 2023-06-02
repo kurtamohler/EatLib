@@ -5,6 +5,7 @@ import urllib.parse
 import zipfile
 import io
 import copy
+import warnings
 from fuzzywuzzy import fuzz, process
 
 from .error_checking import (check, check_type)
@@ -141,6 +142,8 @@ def install_database(overwrite=False):
         check(not os.path.exists(_data_path), RuntimeError,
             f"Database already installed to location '{_data_path}'. "
             "To overwrite it, set argument 'overwrite=True'")
+
+    warnings.warn('Installing FoodyPy database')
 
     foundation_foods_url = 'https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_foundation_food_json_2023-04-20.zip'
     sr_legacy_url = 'https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_json_2018-04.zip'
