@@ -1,3 +1,5 @@
+from .error_checking import check
+
 class Nutrients:
     '''
     Holds nutrition data. Supports basic array arithmetic operations.
@@ -168,3 +170,22 @@ class Nutrients:
           :class:`foodypy.Nutrients`:
         '''
         return self._binary_op(other, lambda a, b: a / b)
+
+    def __eq__(self, other):
+        '''
+        Test equality with another :class:`Nutrients` object.
+
+        Args:
+          other (:class:`Nutrients`):
+            Other nutrients to test equality with.
+        Returns:
+          bool:
+        '''
+        check(isinstance(other, Nutrients), ValueError,
+            f'expected other to be of type foodypy.Nutrients, but got {type(other)}')
+        return (
+            self.fat == other.fat
+            and self.carbs == other.carbs
+            and self.protein == self.protein
+            and self.fiber == self.fiber
+        )
