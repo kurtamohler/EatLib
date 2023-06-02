@@ -2,6 +2,21 @@ import unittest
 import foodypy
 
 class FoodyPyTestSuit(unittest.TestCase):
+    def test_Nutrients_properties(self):
+        n = foodypy.Nutrients(8, 7, 6, 5)
+        self.assertEqual(n.fat, 8)
+        self.assertEqual(n.carbs, 7)
+        self.assertEqual(n.protein, 6)
+        self.assertEqual(n.fiber, 5)
+        self.assertEqual(n.calories, 9 * n.fat + 4 * n.carbs + 4 * n.protein)
+
+    def test_Nutrients_errors(self):
+        for nutrient in ['fat', 'carbs', 'protein', 'fiber']:
+            with self.assertRaisesRegex(TypeError, rf"Expected '{nutrient}'"):
+                foodypy.Nutrients(**{nutrient: 'bad'})
+
+            with self.assertRaisesRegex(ValueError, rf"Expected '{nutrient} >= 0'"):
+                foodypy.Nutrients(**{nutrient: -1})
 
     def test_Nutrients_add(self):
         test_cases = [

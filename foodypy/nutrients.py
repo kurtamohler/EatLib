@@ -1,4 +1,4 @@
-from .error_checking import check
+from .error_checking import check, check_type, check_value
 
 class Nutrients:
     '''
@@ -33,6 +33,16 @@ class Nutrients:
 
             Default: 0
         '''
+        check_type(fat, (int, float), 'fat')
+        check_type(carbs, (int, float), 'carbs')
+        check_type(protein, (int, float), 'protein')
+        check_type(fiber, (int, float), 'fiber')
+
+        check_value(fat >= 0, f"Expected 'fat >= 0' but got {fat}")
+        check_value(carbs >= 0, f"Expected 'carbs >= 0' but got {carbs}")
+        check_value(protein >= 0, f"Expected 'protein >= 0' but got {protein}")
+        check_value(fiber >= 0, f"Expected 'fiber >= 0' but got {fiber}")
+
         self._fat = fat
         self._carbs = carbs
         self._protein = protein
