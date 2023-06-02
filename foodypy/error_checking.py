@@ -1,6 +1,8 @@
 def check(cond, error_type, error_message):
+    assert callable(error_message), 'Error message must be callable'
+
     if not cond:
-        raise error_type(error_message)
+        raise error_type(error_message())
 
 def check_type(obj, expected_type, obj_name):
     if not isinstance(obj, expected_type):

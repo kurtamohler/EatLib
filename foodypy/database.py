@@ -8,7 +8,7 @@ import copy
 import warnings
 from fuzzywuzzy import fuzz, process
 
-from .error_checking import (check, check_type)
+from .error_checking import check, check_type
 from .nutrients import Nutrients
 
 _data_dir = os.path.expanduser('~/.foodypy')
@@ -18,14 +18,14 @@ _database = None
 def _load_database_raw(url):
     req_result = requests.get(url)
     check(req_result.ok, RuntimeError,
-        f"failed to get zipfile from URL: {url}")
+        lambda: f"failed to get zipfile from URL: {url}")
 
     zip_result = zipfile.ZipFile(io.BytesIO(req_result.content))
     infolist = zip_result.infolist()
 
-    check(len(infolist) == 1, RuntimeError,
+    check(len(infolist) == 1, RuntimeError, lambda: (
         "expected zipfile from URL to have exactly one entry, but got "
-        f"{len(infolist)}: {url}")
+        f"{len(infolist)}: {url}"))
 
     with zip_result.open(infolist[0].filename) as json_file:
         data = json.loads(json_file.read())
@@ -38,9 +38,9 @@ def _load_database_raw(url):
 def _extract_nutrient(nutrient_raw, expected_unit):
     nutrient_name = nutrient_raw['nutrient']['name']
     unit = nutrient_raw['nutrient']['unitName']
-    check(unit == expected_unit, RuntimeError,
+    check(unit == expected_unit, RuntimeError, lambda: (
         f"expected nutrient '{nutrient_name}' to be in units "
-        f"'{expected_unit}', but got '{unit}'")
+        f"'{expected_unit}', but got '{unit}'"))
 
     return float(nutrient_raw['amount'])
 
@@ -97,7 +97,7 @@ def _nutrients_from_raw(food_raw):
         nutrients_extracted[nutrient_name] = _extract_add_contributors(nutrients_raw, contributors)
 
     if nutrients_extracted['carbs by diff'] is None:
-        check(False, RuntimeError, 'Need to decide what to do here')
+        check(False, RuntimeError, lambda: 'Need to decide what to do here')
 
     nutrients_dict = {
         'fat': (nutrients_extracted['fat'] or 0),
@@ -122,7 +122,7 @@ def _convert_from_raw(data_raw):
         nutrients = _nutrients_from_raw(food)
 
         check(name not in food_data, RuntimeError,
-            f"multiple entries for food '{name}' found in database")
+            lambda: f"multiple entries for food '{name}' found in database")
         food_data[name] = nutrients
 
     return food_data
@@ -139,9 +139,9 @@ def install_database(overwrite=False):
         Default: False
     '''
     if not overwrite:
-        check(not os.path.exists(_data_path), RuntimeError,
+        check(not os.path.exists(_data_path), RuntimeError, lambda: (
             f"Database already installed to location '{_data_path}'. "
-            "To overwrite it, set argument 'overwrite=True'")
+            "To overwrite it, set argument 'overwrite=True'"))
 
     warnings.warn('Installing FoodyPy database')
 
@@ -173,9 +173,9 @@ def _maybe_load_database():
     global _database
 
     if _database is None:
-        check(os.path.exists(_data_path), RuntimeError,
+        check(os.path.exists(_data_path), RuntimeError, lambda: (
             "Cannot load database because it has not been installed "
-            "please run 'foodypy.install_database()'")
+            "please run 'foodypy.install_database()'"))
 
         with open(_data_path) as json_file:
             _database = json.loads(json_file.read())
@@ -223,9 +223,9 @@ def get(food_name):
       :class:`foodypy.Nutrients`
     '''
     _maybe_load_database()
-    check(food_name in _database, ValueError,
+    check(food_name in _database, ValueError, lambda: (
         f"Did not find exact name '{food_name}' in database. "
-        "Use 'foodypy.search' to find existing matches")
+        "Use 'foodypy.search' to find existing matches"))
     return Nutrients(**_database[food_name])
 
 def copy_database():

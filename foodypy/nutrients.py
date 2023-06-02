@@ -38,10 +38,10 @@ class Nutrients:
         check_type(protein, (int, float), 'protein')
         check_type(fiber, (int, float), 'fiber')
 
-        check_value(fat >= 0, f"Expected 'fat >= 0' but got {fat}")
-        check_value(carbs >= 0, f"Expected 'carbs >= 0' but got {carbs}")
-        check_value(protein >= 0, f"Expected 'protein >= 0' but got {protein}")
-        check_value(fiber >= 0, f"Expected 'fiber >= 0' but got {fiber}")
+        check_value(fat >= 0, lambda: f"Expected 'fat >= 0' but got {fat}")
+        check_value(carbs >= 0, lambda: f"Expected 'carbs >= 0' but got {carbs}")
+        check_value(protein >= 0, lambda: f"Expected 'protein >= 0' but got {protein}")
+        check_value(fiber >= 0, lambda: f"Expected 'fiber >= 0' but got {fiber}")
 
         self._fat = fat
         self._carbs = carbs
@@ -191,7 +191,7 @@ class Nutrients:
         Returns:
           bool:
         '''
-        check(isinstance(other, Nutrients), ValueError,
+        check(isinstance(other, Nutrients), ValueError, lambda:
             f'expected other to be of type foodypy.Nutrients, but got {type(other)}')
         return (
             self.fat == other.fat
